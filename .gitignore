@@ -1,0 +1,14 @@
+.DS_Store
+.idea
+.vscode
+.pytest_cache
+
+*.log
+*.pyc
+**/__pycache__/
+*.sql
+*.7z
+.env
+.ruff_cache
+.python-version
+*.code-workspace
