@@ -9,7 +9,7 @@ readme = "README.md"
 python = "^3.12"
 fastapi = "^0.115.3"
 uvicorn = "^0.32.0"
-pydantic = "^2.9.2"
+pydantic = {extras = ["email"], version = "^2.9.2"}
 pydantic-settings = "^2.6.0"
 faststream = {extras = ["rabbit"], version = "^0.5.28"}
 
@@ -51,4 +51,4 @@ no-lines-before = ["local-folder"]
 section-order = ["future", "standard-library", "first-party", "third-party", "src", "local-folder"]
 
 [tool.ruff.lint.isort.sections]
-src = ["config", "migrations", "tests", "src", "deps", "dtos", "events", "services"]
+src = ["config", "migrations", "tests", "src", "deps", "dtos", "events", "services", "api"]

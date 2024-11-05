@@ -1,9 +1,7 @@
-from fastapi import APIRouter, FastAPI
+from fastapi import FastAPI
 
-from .faststream import queue_router
+from api.users.register import router as register_router
 
 app = FastAPI()
 
-api_router = APIRouter()
-app.include_router(queue_router)
-app.include_router(api_router)
+app.include_router(register_router)

@@ -8,17 +8,19 @@ from dtos import SendMailDTO
 
 
 class SendMailService:
-    async def send(self, dto: SendMailDTO) -> None:
-        messages = self._get_messages(dto)
-        asyncio.gather(*[self._handle_message(message) for message in messages])
+    @classmethod
+    async def send(cls, dto: SendMailDTO) -> None:
+        messages = cls._get_messages(dto)
+        asyncio.gather(*[cls._handle_message(message) for message in messages])
 
-    def _get_messages(self, dto: SendMailDTO) -> list[EmailMessage]:
+    @staticmethod
+    def _get_messages(dto: SendMailDTO) -> list[EmailMessage]:
         messages = []
-        content = jinja_env.get_template(dto.type.template).render(**dto.context)
+        content = jinja_env.get_template(dto.template).render(**dto.context)
 
         for recipient in dto.to:
             message = EmailMessage()
-            message['Subject'] = dto.type.subject
+            message['Subject'] = dto.subject
             message['From'] = settings.SMTP_FROM
             message['To'] = recipient
             message.add_header('Content-Type', 'text/html')
@@ -27,6 +29,7 @@ class SendMailService:
 
         return messages
 
-    async def _handle_message(self, message: EmailMessage) -> None:
+    @staticmethod
+    async def _handle_message(message: EmailMessage) -> None:
         async with smtp_client:
             await smtp_client.send_message(message)

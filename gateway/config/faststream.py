@@ -1,5 +1,5 @@
-from faststream.rabbit.fastapi import RabbitRouter
+from faststream.rabbit import RabbitBroker
 
-from .settings import settings
+from config.settings import settings
 
-queue_router = RabbitRouter(settings.RMQ_URI.unicode_string())
+broker = RabbitBroker(settings.RMQ_URI.unicode_string())

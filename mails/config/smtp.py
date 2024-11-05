@@ -1,6 +1,6 @@
 from aiosmtplib import SMTP
 
-from .settings import settings
+from config.settings import settings
 
 smtp_client = SMTP(
     hostname=settings.SMTP_HOSTNAME,
