@@ -8,7 +8,7 @@ exc_middleware = ExceptionMiddleware()
 
 
 @exc_middleware.add_handler(Exception)
-async def reply_to_exc_handler(
+async def reply_to_handler(
     exc: Exception,
     broker: RabbitBroker = Context(),
     message: RabbitMessage = Context(),
