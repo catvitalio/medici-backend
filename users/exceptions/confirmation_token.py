@@ -1,9 +1,9 @@
 from http import HTTPStatus
 
-from .direct_reply_to import DirectReplyToException
+from .reply_to import ReplyToException
 
 
-class ConfirmationTokenException(DirectReplyToException):
+class ConfirmationTokenException(ReplyToException):
     message = 'Confirmation token error'
 
 
