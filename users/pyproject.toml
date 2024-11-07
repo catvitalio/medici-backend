@@ -19,6 +19,7 @@ python-jose = "^3.3.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.7.1"
+debugpy = "^1.8.7"
 
 [build-system]
 requires = ["poetry-core"]
@@ -54,4 +55,4 @@ no-lines-before = ["local-folder"]
 section-order = ["future", "standard-library", "first-party", "third-party", "src", "local-folder"]
 
 [tool.ruff.lint.isort.sections]
-src = ["config", "migrations", "tests", "src", "deps", "dtos", "events", "services", "exceptions", "constants"]
+src = ["config", "migrations", "tests", "src", "deps", "dtos", "events", "services", "exceptions", "constants", "models"]

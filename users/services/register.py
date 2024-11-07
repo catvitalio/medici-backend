@@ -1,13 +1,16 @@
 from datetime import timedelta
 
-from models import User
-
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from config.security import hasher
-from dtos.register import RegisterCompleteDTO, RegisterDTO
-from exceptions.register import UserAlreadyActive, UserNotFound, UserWithThisEmailAlreadyExists
+from dtos import RegisterCompleteDTO, RegisterStartDTO
+from exceptions.register import (
+    UserAlreadyActive,
+    UserByTokenNotFound,
+    UserWithThisEmailAlreadyExists,
+)
+from models import User
 from services.confirmation_token import ConfirmationTokenService
 
 
@@ -18,16 +21,16 @@ class RegisterService:
         self._db = db
         self._token_service = ConfirmationTokenService(self.TOKEN_TTL)
 
-    async def start(self, dto: RegisterDTO) -> User:
+    async def start(self, dto: RegisterStartDTO) -> User:
         await self._validate_user(dto)
         return await self._create_user(dto)
 
-    async def _validate_user(self, dto: RegisterDTO) -> None:
+    async def _validate_user(self, dto: RegisterStartDTO) -> None:
         user = await self._get_user(dto.email, is_active=True)
         if user:
             raise UserWithThisEmailAlreadyExists
 
-    async def _create_user(self, dto: RegisterDTO) -> User:
+    async def _create_user(self, dto: RegisterStartDTO) -> User:
         user = await self._get_user(dto.email, is_active=False)
         if not user:
             user = User(
@@ -52,7 +55,7 @@ class RegisterService:
         user = await self._db.get(User, int(user_id))
 
         if not user:
-            raise UserNotFound
+            raise UserByTokenNotFound
         elif user.is_active:
             raise UserAlreadyActive
 

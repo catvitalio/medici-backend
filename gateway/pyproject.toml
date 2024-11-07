@@ -16,6 +16,7 @@ faststream = {extras = ["rabbit"], version = "^0.5.28"}
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.7.1"
+debugpy = "^1.8.7"
 
 [build-system]
 requires = ["poetry-core"]

@@ -7,5 +7,6 @@ router = RabbitRouter()
 
 @router.subscriber('user.login.command')
 @router.publisher('user.logged_in.event')
+@router.publisher()
 async def login() -> TokenPairDTO:
     return TokenPairDTO(access='access', refresh='refresh')
