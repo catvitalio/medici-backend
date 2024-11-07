@@ -1,3 +1,3 @@
 from .register import RegisterStartDTO, RegisterCompleteDTO
 from .user import UserDTO
-from .error import DirectReplyToErrorDTO
+from .rabbit_sync import RabbitSyncErrorDTO
