@@ -1,1 +1,1 @@
-from .auth import AuthException, InvalidCredentials, NotAuthenticated
+from .auth import AuthException, InvalidCredentials, NotAuthenticated, SignatureExpired

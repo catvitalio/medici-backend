@@ -14,3 +14,7 @@ class InvalidCredentials(AuthException):
 
 class NotAuthenticated(AuthException):
     detail = 'Not authenticated'
+
+
+class SignatureExpired(AuthException):
+    detail = 'Signature expired'

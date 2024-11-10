@@ -53,4 +53,4 @@ no-lines-before = ["local-folder"]
 section-order = ["future", "standard-library", "first-party", "third-party", "src", "local-folder"]
 
 [tool.ruff.lint.isort.sections]
-src = ["config", "migrations", "tests", "src", "deps", "dtos", "events", "services", "api"]
+src = ["config", "migrations", "tests", "src", "deps", "dtos", "events", "services", "api", "exceptions"]

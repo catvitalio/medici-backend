@@ -2,9 +2,11 @@ from datetime import datetime, timedelta
 
 from jose import jwt
 from jose.constants import ALGORITHMS
+from jose.exceptions import ExpiredSignatureError, JWTError
 
 from config.settings import settings
 from dtos import TokenPairDTO, UserDTO
+from exceptions import InvalidCredentials, SignatureExpired
 
 
 class JWTService:
@@ -48,7 +50,13 @@ class JWTService:
         )
 
     def decode(self, token: str) -> UserDTO:
-        payload = jwt.decode(token, self._secret, algorithms=self._algorithm)
+        try:
+            payload = jwt.decode(token, self._secret, algorithms=self._algorithm)
+        except ExpiredSignatureError:
+            raise SignatureExpired
+        except JWTError:
+            raise InvalidCredentials
+
         return UserDTO(
             id=payload['sub'],
             email=payload['email'],
