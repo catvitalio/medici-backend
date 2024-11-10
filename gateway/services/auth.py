@@ -1,9 +1,8 @@
-from exceptions import InvalidCredentials
-
 from fastapi import Depends, Response, status
 from jose import JWTError
 
 from dtos import AuthDTO, TokenPairDTO, UserDTO
+from exceptions import InvalidCredentials
 from services import JWTService, RabbitSyncClient
 
 

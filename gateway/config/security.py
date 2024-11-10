@@ -1,7 +1,7 @@
-from exceptions import NotAuthenticated
-
 from fastapi import Request
 from fastapi.security import OAuth2PasswordBearer
+
+from exceptions import NotAuthenticated
 
 
 class OAuth2CookiePasswordBearer(OAuth2PasswordBearer):
@@ -20,4 +20,4 @@ class OAuth2CookiePasswordBearer(OAuth2PasswordBearer):
         return cookie_token
 
 
-bearer_security = OAuth2CookiePasswordBearer(tokenUrl='/auth')
+bearer_security = OAuth2CookiePasswordBearer(tokenUrl='/api/auth')
