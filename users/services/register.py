@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from config.security import hasher
 from deps import get_db
 from dtos import RegisterCompleteDTO, RegisterStartDTO
+from dtos.register import RegisterStartedDTO
 from exceptions.register import (
     UserAlreadyActive,
     UserByTokenNotFound,
@@ -23,9 +24,15 @@ class RegisterService:
         self._db = db
         self._token_service = ConfirmationTokenService(self.TOKEN_TTL)
 
-    async def start(self, dto: RegisterStartDTO) -> User:
+    async def start(self, dto: RegisterStartDTO) -> RegisterStartedDTO:
         await self._validate_user(dto)
-        return await self._create_user(dto)
+        user = await self._create_user(dto)
+        return RegisterStartedDTO(
+            id=user.id,
+            email=user.email,
+            is_active=user.is_active,
+            token=self._token_service.generate(user.id),
+        )
 
     async def _validate_user(self, dto: RegisterStartDTO) -> None:
         user = await self._get_user(dto.email, is_active=True)

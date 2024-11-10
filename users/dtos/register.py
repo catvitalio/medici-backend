@@ -6,5 +6,12 @@ class RegisterStartDTO(BaseModel):
     password: str
 
 
+class RegisterStartedDTO(BaseModel):
+    id: int  # noqa: A003
+    email: EmailStr
+    is_active: bool
+    token: str
+
+
 class RegisterCompleteDTO(BaseModel):
     token: str

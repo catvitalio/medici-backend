@@ -8,7 +8,6 @@ router = RabbitRouter()
 
 
 @router.subscriber('user.auth.command')
-@router.publisher()
 async def auth(dto: AuthDTO, service: AuthService = Depends(AuthService)) -> UserDTO:
     user = await service.auth(dto)
     return UserDTO.model_validate(user, from_attributes=True)

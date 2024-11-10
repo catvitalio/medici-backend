@@ -1,4 +1,4 @@
-from pydantic import AmqpDsn, EmailStr
+from pydantic import AmqpDsn, AnyUrl, EmailStr
 from pydantic_settings import BaseSettings
 
 
@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     SMTP_FROM: EmailStr
     SMTP_START_TLS: bool
     SMTP_USE_TLS: bool
+
+    FRONTEND_URL: AnyUrl = 'http://localhost:8000'
 
 
 settings = Settings()  # type: ignore
