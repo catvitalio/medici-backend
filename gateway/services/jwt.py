@@ -29,7 +29,13 @@ class JWTService:
         )
 
     def refresh(self, token: str) -> TokenPairDTO:
-        sub = jwt.decode(token, self._secret, algorithms=self._algorithm)['sub']
+        try:
+            sub = jwt.decode(token, self._secret, algorithms=self._algorithm)['sub']
+        except ExpiredSignatureError:
+            raise SignatureExpired
+        except JWTError:
+            raise InvalidCredentials
+
         return TokenPairDTO(
             access=self.encode(sub, self._access_ttl),
             refresh=self.encode(sub, self._refresh_ttl),

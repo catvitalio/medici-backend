@@ -1,8 +1,6 @@
 from fastapi import Depends, Response, status
-from jose import JWTError
 
 from dtos import AuthDTO, TokenPairDTO, UserDTO
-from exceptions import InvalidCredentials
 from services import JWTService, RabbitSyncClient
 
 
@@ -19,10 +17,7 @@ class AuthService:
         return self._token_service.obtain(user)
 
     def refresh_tokens(self, token: str) -> TokenPairDTO:
-        try:
-            return self._token_service.refresh(token)
-        except JWTError:
-            raise InvalidCredentials
+        return self._token_service.refresh(token)
 
     @staticmethod
     def get_response_with_cookies(pair: TokenPairDTO | None) -> Response:
