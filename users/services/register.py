@@ -1,9 +1,11 @@
 from datetime import timedelta
 
+from faststream import Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from config.security import hasher
+from deps import get_db
 from dtos import RegisterCompleteDTO, RegisterStartDTO
 from exceptions.register import (
     UserAlreadyActive,
@@ -17,7 +19,7 @@ from services.confirmation_token import ConfirmationTokenService
 class RegisterService:
     TOKEN_TTL = timedelta(days=365)
 
-    def __init__(self, db: AsyncSession) -> None:
+    def __init__(self, db: AsyncSession = Depends(get_db)) -> None:
         self._db = db
         self._token_service = ConfirmationTokenService(self.TOKEN_TTL)
 

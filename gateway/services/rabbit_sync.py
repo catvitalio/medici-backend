@@ -1,9 +1,10 @@
 from typing import Generic, TypeVar
 
-from fastapi import HTTPException
+from fastapi import Depends, HTTPException
 from faststream.rabbit import RabbitBroker
 from pydantic import BaseModel
 
+from deps import get_broker
 from dtos import RabbitSyncErrorDTO
 
 ReplyT = TypeVar('ReplyT', bound=BaseModel)
@@ -15,7 +16,7 @@ class RabbitSyncClient(Generic[ReplyT]):
     Implemented via direct reply-to feature.
     """
 
-    def __init__(self, broker: RabbitBroker) -> None:
+    def __init__(self, broker: RabbitBroker = Depends(get_broker)) -> None:
         self._broker = broker
 
     async def send(self, body: BaseModel, reply_type: type[ReplyT], topic: str) -> ReplyT:

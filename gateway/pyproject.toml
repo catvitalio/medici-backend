@@ -12,6 +12,7 @@ uvicorn = "^0.32.0"
 pydantic = {extras = ["email"], version = "^2.9.2"}
 pydantic-settings = "^2.6.0"
 faststream = {extras = ["rabbit"], version = "^0.5.28"}
+python-jose = "^3.3.0"
 
 
 [tool.poetry.group.dev.dependencies]

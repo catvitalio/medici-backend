@@ -1,2 +1,2 @@
 from .broker import get_broker
-from .rabbit_sync import get_sync_client
+from .current_user import get_current_user

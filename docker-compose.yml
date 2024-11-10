@@ -12,6 +12,7 @@ services:
       - ./gateway:/server
     environment:
       RMQ_URI: amqp://${RMQ_USER}:${RMQ_PASSWORD}@rmq:5672/${RMQ_VHOST}
+      SECRET_KEY: ${SECRET_KEY}
     depends_on:
       rmq:
         condition: service_healthy
@@ -26,7 +27,6 @@ services:
     environment:
       POSTGRES_URI: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${USERS_DB}
       RMQ_URI: amqp://${RMQ_USER}:${RMQ_PASSWORD}@rmq:5672/${RMQ_VHOST}
-      SECRET_KEY: ${SECRET_KEY}
     depends_on:
       postgres:
         condition: service_healthy
