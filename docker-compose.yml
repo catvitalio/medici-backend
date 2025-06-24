@@ -54,6 +54,20 @@ services:
       rmq:
         condition: service_healthy
 
+  transactions:
+    command: faststream run config.faststream:app --reload
+    build:
+      dockerfile: ./Dockerfile
+      context: ./transactions
+    volumes:
+      - ./transactions:/server
+    environment:
+      POSTGRES_URI: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${TRANSACTIONS_DB}
+      RMQ_URI: amqp://${RMQ_USER}:${RMQ_PASSWORD}@rmq:5672/${RMQ_VHOST}
+    depends_on:
+      rmq:
+        condition: service_healthy
+
   postgres:
     image: postgres:16.4-alpine
     ports:
@@ -64,7 +78,7 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DATABASES: ${USERS_DB}
+      POSTGRES_DATABASES: ${USERS_DB},${TRANSACTIONS_DB}
     healthcheck:
       test: pg_isready
       interval: 2s
